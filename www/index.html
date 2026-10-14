@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d1b">
+<title>Prosper AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080d1b;color:#f1f5f9;font-family:Arial,sans-serif}
+header{padding:22px 18px;background:#111a30;border-bottom:1px solid #26334d}
+.logo{font-size:25px;font-weight:bold;color:#80aaff}
+header p{margin:7px 0 0;color:#aab7d0;font-size:13px}
+main{max-width:700px;margin:auto;padding:18px}
+.welcome{margin:18px 0 24px}
+.welcome h2{font-size:27px;margin-bottom:8px}
+.welcome p{color:#aab7d0;line-height:1.5}
+#chat{display:flex;flex-direction:column;gap:12px;padding-bottom:20px}
+.msg{padding:13px 15px;border-radius:15px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.ai{background:#17233c;align-self:flex-start;max-width:92%}
+.user{background:#2856ad;align-self:flex-end;max-width:92%}
+form{position:sticky;bottom:0;background:#080d1b;padding:12px 0 18px;display:flex;gap:8px}
+input{min-width:0;flex:1;background:#151f34;border:1px solid #34435f;color:white;border-radius:13px;padding:15px;font-size:16px}
+button{background:#3978ee;border:0;color:white;border-radius:13px;padding:0 19px;font-size:15px;font-weight:bold}
+footer{text-align:center;color:#7787a4;font-size:12px;padding:8px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✦ Prosper AI</div>
+<p>Your personal AI assistant</p>
+</header>
+<main>
+<section class="welcome">
+<h2>Hey there! 👋</h2>
+<p>Welcome to Prosper AI. Ask me about school, science, mathematics, coding, or anything you want to learn.</p>
+</section>
+<div id="chat">
+<div class="msg ai">Hello! I'm Prosper AI. What would you like to learn today?</div>
+</div>
+<form id="form">
+<input id="question" placeholder="Ask Prosper AI..." autocomplete="off" required>
+<button type="submit">Send</button>
+</form>
+<footer>Prosper AI · Your learning companion</footer>
+</main>
+<script>
+const chat=document.getElementById('chat');
+const input=document.getElementById('question');
+function addMessage(text,who){
+const el=document.createElement('div');
+el.className='msg '+who;
+el.textContent=text;
+chat.appendChild(el);
+el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function reply(q){
+const s=q.toLowerCase().trim();
+if(/\b(hello|hi|hey)\b/.test(s)) return 'Hello! Welcome to Prosper AI. How can I help you?';
+if(s.includes('your name')) return 'My name is Prosper AI!';
+if(s.includes('who made you')) return 'You are building me, Prosper!';
+if(s.includes('help')) return 'I can help you learn science, maths, coding and more. My current version uses simple built-in replies.';
+if(s.includes('physics')) return 'Physics is the study of matter, energy, forces and motion. What physics topic are you studying?';
+if(s.includes('chemistry')) return 'Chemistry is the study of substances, their properties and how they react. Ask me about atoms, elements or chemical formulas.';
+if(s.includes('math')) return 'I can help with mathematics. Send me a question and we can work through it step by step.';
+if(s.includes('coding')||s.includes('programming')) return 'Coding means writing instructions for a computer. We can learn Python, HTML, CSS and JavaScript.';
+if(s.includes('thank')) return 'You are welcome! Keep learning and building.';
+return 'I received your question: "'+q+'"\n\nI'm still a starter version, so I don't know the answer yet. Next, we'll connect Prosper AI to an AI model.';
+}
+document.getElementById('form').addEventListener('submit',e=>{
+e.preventDefault();
+const q=input.value.trim();
+if(!q)return;
+addMessage(q,'user');
+input.value='';
+addMessage(reply(q),'ai');
+});
+</script>
+</body>
+</html>
